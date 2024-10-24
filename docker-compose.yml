@@ -42,7 +42,6 @@ services:
       - 27017:27017
     volumes:
       - mongodb:/data/db
-      - ./scripts/seed-db.scripts : docker-entrypoint-initdb.d
     env_file: ".env.docker"
     environment:
       - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
