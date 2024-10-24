@@ -7,6 +7,7 @@
 - Secure user authentication with JSON Web Tokens
 - Role based authorizationfor effective access control.
 - Performance optimization through caching
+- Rate limiting to prevent api abuse by users
 - Server-Side form data validation to ensure integrity and prevent invalid or malicious submissions
 - Comprehensive test coverage with extensive unit and integration tests for all features.
 
@@ -90,8 +91,5 @@ copy .env.docker.example .env.docker
 
 - Step1 : Inside test folder, `Insomnia_2024-10-24.json` is present to import collection.
 - Step2: import the collection and setup `ApiUrl` environment variable only with port number to use collection properly
-  ```sh
-  docker exec -it node-server sh
-  ```
 
 ## Usage
