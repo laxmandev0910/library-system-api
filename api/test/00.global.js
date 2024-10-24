@@ -13,7 +13,6 @@ beforeAll((done) => {
     mongoose.connect(Database.getConnectionString(), {
       dbName: MONGO_DB.NAME,
     });
-    throw new Error("dsfsdf");
     exec("npm run seed:test", (error, stdout, stderr) => {
       if (error) {
         return done(error);
