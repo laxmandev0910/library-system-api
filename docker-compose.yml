@@ -1,0 +1,58 @@
+# start:          docker-compose up  --build -d (-d for detached mode)
+# stop:           docker-compose down
+services:
+  node-server:
+    container_name: node-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:3080
+    env_file: ".env.docker"
+    environment:
+      - MONGO_DB_HOST=mongo-server
+      - REDIS_HOST=redis-server
+    networks:
+      - devlabnet
+    depends_on:
+      - redis-server
+      - mongo-server
+    stdin_open: true
+    tty: true
+  redis-server:
+    container_name: redis-server
+    restart: unless-stopped
+    image: redis/redis-stack:latest
+    ports:
+      - 6379:6379
+      - 8001:8001
+    volumes:
+      - redisdb:/data
+    networks:
+      - devlabnet
+    env_file: ".env.docker"
+    environment:
+      - REDIS_ARGS="--requirepass ${REDIS_PASSWORD}"
+  mongo-server:
+    container_name: mongo-server
+    restart: unless-stopped
+    image: mongodb/mongodb-community-server:7.0.14-ubi9
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+      - ./scripts/seed-db.scripts : docker-entrypoint-initdb.d
+    env_file: ".env.docker"
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_DB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_DB_PASSWORD}
+    networks:
+      - devlabnet
+networks:
+  devlabnet:
+    external: true
+volumes:
+  redisdb:
+  mongodb:
