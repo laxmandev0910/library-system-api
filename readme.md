@@ -60,20 +60,24 @@ copy .env.docker.example .env.docker
 - Step1 : Install [Docker Desktop v27.x](https://www.docker.com/get-started/)
 - Step2 : Goto Project folder and open command prompt
 - Step3 : Make sure `.env.docker`and .env.test created and set with valid environments values
-- Step4: Run docker compose command
+- Step4: Create external docker network
+  ```sh
+  docker  network create --driver=bridge  devlabnet
+  ```
+- Step5: Run docker compose command
   ```sh
   docker-compose up --build -d
   ```
-- Step5: Open app docker container's terminal
+- Step6: Open app docker container's terminal
   ```sh
   docker exec -it node-server sh
   ```
-- Step6: Run npm command to seed database
+- Step7: Run npm command to seed database
   ```sh
     npm run seed
   ```
-- Step7: Type `exit` to leave the sh session
-- Step8: Navigate to`http://localhost:{APP_PORT}/api/v1` in your browser to view the site
+- Step8: Type `exit` to leave the sh session
+- Step9: Navigate to`http://localhost:{APP_PORT}/api/v1` in your browser to view the site
 
 > Follow the below steps to run test:
 
